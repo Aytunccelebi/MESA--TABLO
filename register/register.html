@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - Mesai Takip Sistemi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .register-container {
+            max-width: 500px;
+            margin: 50px auto;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #198754;
+            color: white;
+            text-align: center;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
+        }
+        .form-control:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.25rem rgba(25,135,84,.25);
+        }
+        .password-strength {
+            height: 5px;
+            margin-top: 5px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container register-container">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="bi bi-person-plus"></i> Yeni Hesap Oluştur
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form id="registerForm" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="firstName" class="form-label">Ad</label>
+                            <input type="text" class="form-control" id="firstName" required>
+                            <div class="invalid-feedback">
+                                Lütfen adınızı girin
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Soyad</label>
+                            <input type="text" class="form-control" id="lastName" required>
+                            <div class="invalid-feedback">
+                                Lütfen soyadınızı girin
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">E-posta Adresi</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">
+                                    Geçerli bir e-posta adresi girin
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="password" class="form-label">Şifre</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-key"></i>
+                                </span>
+                                <input type="password" class="form-control" id="password" required
+                                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength bg-secondary opacity-25 mt-2"></div>
+                            <small class="text-muted">
+                                Şifreniz en az 8 karakter uzunluğunda olmalı ve büyük harf, küçük harf,
+                                rakam ve özel karakter içermelidir.
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="confirmPassword" class="form-label">Şifre Tekrar</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-key-fill"></i>
+                                </span>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Şifreler eşleşmiyor
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    <a href="#" class="text-success">Kullanım şartları</a>nı okudum ve kabul ediyorum
+                                </label>
+                                <div class="invalid-feedback">
+                                    Devam etmek için kullanım şartlarını kabul etmelisiniz
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="bi bi-person-plus"></i> Kayıt Ol
+                            </button>
+                        </div>
+                        <div class="col-12 text-center">
+                            <p class="mb-0">
+                                Zaten hesabınız var mı? 
+                                <a href="login.html" class="text-success">Giriş Yap</a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validasyonu
+        const form = document.getElementById('registerForm');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const togglePassword = document.getElementById('togglePassword');
+        const strengthBar = document.querySelector('.password-strength');
+
+        // Şifre göster/gizle
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('bi-eye');
+            this.querySelector('i').classList.toggle('bi-eye-slash');
+        });
+
+        // Şifre gücü kontrolü
+        password.addEventListener('input', function() {
+            const strength = checkPasswordStrength(this.value);
+            updateStrengthBar(strength);
+        });
+
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength += 25;
+            if (password.match(/[A-Z]/)) strength += 25;
+            if (password.match(/[a-z]/)) strength += 25;
+            if (password.match(/[0-9]/)) strength += 12.5;
+            if (password.match(/[^A-Za-z0-9]/)) strength += 12.5;
+            return strength;
+        }
+
+        function updateStrengthBar(strength) {
+            strengthBar.style.width = strength + '%';
+            if (strength < 50) {
+                strengthBar.className = 'password-strength bg-danger';
+            } else if (strength < 75) {
+                strengthBar.className = 'password-strength bg-warning';
+            } else {
+                strengthBar.className = 'password-strength bg-success';
+            }
+        }
+
+        // Form gönderimi
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!form.checkValidity()) {
+                e.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity('Şifreler eşleşmiyor');
+                form.classList.add('was-validated');
+                return;
+            }
+
+            // Form verilerini topla
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                password: password.value
+            };
+
+            // Burada backend'e gönderme işlemi yapılacak
+            console.log('Kayıt verileri:', formData);
+            
+            // Başarılı kayıt simülasyonu
+            alert('Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
